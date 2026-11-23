@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تطبيق حسين تركي</title>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    background: #f4f1ea;
+    color: #1d3b2f;
+    font-family: sans-serif;
+  }
+  body.dark { background: #121212; color: #e8e8e8; }
+  #count { font-size: 90px; font-weight: bold; }
+  #tap {
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: none;
+    background: #2e7d5b;
+    color: white;
+    font-size: 28px;
+  }
+  #tap:active { transform: scale(0.95); }
+  .row { display: flex; gap: 12px; }
+  .row button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+  <h1>تطبيق حسين تركي</h1>
+  <h2>سبحان الله</h2>
+  <div id="count">0</div>
+  <button id="tap">سبّح</button>
+  <div class="row">
+    <button id="reset">تصفير</button>
+    <button id="theme">الوضع الداكن</button>
+  </div>
+
+<script>
+  let count = Number(localStorage.getItem("count")) || 0;
+  const countEl = document.getElementById("count");
+  countEl.textContent = count;
+
+  if (localStorage.getItem("dark") === "1") {
+    document.body.classList.add("dark");
+  }
+
+  document.getElementById("tap").onclick = function () {
+    count++;
+    countEl.textContent = count;
+    localStorage.setItem("count", count);
+    if (navigator.vibrate) navigator.vibrate(30);
+  };
+
+  document.getElementById("reset").onclick = function () {
+    count = 0;
+    countEl.textContent = 0;
+    localStorage.setItem("count", 0);
+  };
+
+  document.getElementById("theme").onclick = function () {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("dark",
+      document.body.classList.contains("dark") ? "1" : "0");
+  };
+</script>
+</body>
+</html>
